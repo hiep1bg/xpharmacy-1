@@ -3,7 +3,7 @@ info:
   version: 1.0.0
   title: Xpharmacy
   description: our frist project
-basePath: /api
+basePath: /
 
 
 
@@ -136,7 +136,7 @@ paths:
           description: The drug has been successfully updated.
           schema:
             $ref: '#/definitions/Prescription'
-  /user:
+  /api/v1/user:
     post:
       summary: "Creat a user"
       tags:
@@ -160,7 +160,7 @@ paths:
         200: 
           description: Return all users
     
-  /user/{id}:
+  /api/v1/user/{id}:
     get:
       summary: Get 1 user
       tags:
@@ -193,20 +193,7 @@ paths:
       responses:
         200:
           description: The user has been successfully updated.
-  /users/{id}/prescriptionImg:
-    post:
-      tags:
-        - User
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: id of user post prescription image
-          type: string
-      responses:
-        200: 
-          description: Upload complete
-  /user/login: 
+  /api/v1/user/auth/login: 
     post: 
       tags:
         - User
@@ -220,11 +207,10 @@ paths:
       responses:
         200:
           description: Returns all examples
-  /user/logout: 
-    post: 
+  /api/v1/user/auth/logout: 
+    get: 
       tags:
         - User
-      parameters: []
       responses:
         default:
           description: "Successful log out"
