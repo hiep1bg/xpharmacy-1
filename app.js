@@ -4,10 +4,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
+const session = require('express-session');
 
 var indexRouter = require('./routes/index');
 const config = require('./config.json');
 const usersRouter = require("./api/user/index");
+const loginRouter = require("./api/auth/index");
 
 var app = express();
 
@@ -20,6 +22,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: config.secureCookie,
+      maxAge: 12 * 60 * 60 * 1000
+    }
+  })
+)
 
 app.use('/', indexRouter);
 
@@ -33,6 +46,7 @@ mongoose.connect(config.MONGO_DB, { useNewUrlParser: true }, err => {
   else {
     console.log("Successful to connect mongodb");
     app.use("/api/v1/user", usersRouter);
+    app.use("/api/v1/auth", loginRouter);
     app.use(function (req, res, next) {
       next(createError(404));
     });
@@ -40,7 +54,7 @@ mongoose.connect(config.MONGO_DB, { useNewUrlParser: true }, err => {
       // set locals, only providing error in development
       res.locals.message = err.message;
       res.locals.error = req.app.get('env') === 'development' ? err : {};
-    
+
       // render the error page
       res.status(err.status || 500);
       res.render('error');

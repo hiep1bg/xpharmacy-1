@@ -1,6 +1,6 @@
 const express = require('express');
-const { register, getAllUsers, getOneUser } = require("./controller");
 const router = express.Router();
+const { register, getAllUsers, getOneUser } = require("./controller");
 
 router.post("/", (req, res) => {
     register(req.body)
@@ -22,6 +22,5 @@ router.get("/:id", (req, res) => {
     .catch(err => res.status(500).send(err));
 });
 
-router.post("/login");
 
 module.exports = router;

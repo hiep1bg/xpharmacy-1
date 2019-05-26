@@ -38,19 +38,28 @@ const getOneUser = (id) => {
 
 const changeUserPassword = (id, password) => {
     return new Promise((resolve, reject) => {
-        userModel.findByIdAndUpdate(id, {password}, {new: true}, (err, user) => {
-            if(err) return reject(err);
-            else{
+        userModel.findByIdAndUpdate(id, { password }, { new: true }, (err, user) => {
+            if (err) return reject(err);
+            else {
                 resolve(user)
             }
         })
     })
 };
 
+const getUserByAccount = (account) => {
+    return new Promise((resolve, reject) => {
+        userModel.findOne({ account })
+            .then(user => resolve(user))
+            .catch(err => reject(err));
+    })
+}
+
 module.exports = {
     register,
     getAllUsers,
     getOneUser,
-    changeUserPassword
+    changeUserPassword,
+    getUserByAccount
 };
 
