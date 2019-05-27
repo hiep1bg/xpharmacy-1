@@ -10,7 +10,7 @@ var indexRouter = require('./routes/index');
 const config = require('./config.json');
 const usersRouter = require("./api/user/index");
 const loginRouter = require("./api/auth/index");
-
+const prescriptRouter = require("./api/prescription/index");
 var app = express();
 
 // view engine setup
@@ -45,6 +45,7 @@ mongoose.connect(config.MONGO_DB, { useNewUrlParser: true }, err => {
   if (err) console.log(err);
   else {
     console.log("Successful to connect mongodb");
+    app.use("/prescription", prescriptRouter);
     app.use("/api/v1/user", usersRouter);
     app.use("/api/v1/auth", loginRouter);
     app.use(function (req, res, next) {
