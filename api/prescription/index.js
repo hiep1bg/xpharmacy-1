@@ -17,7 +17,7 @@ router.post("/",
 
 router.get("/", (req, res) => {
     getAllPrecription(req.query.page || 1)
-    .then(allPresciption => res.status(200).send(allPresciption))
+    .then(allPresciption => res.status(200).json(allPresciption))
     .catch(err => res.status(503).send(err));
 });
 

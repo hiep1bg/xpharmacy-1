@@ -1,20 +1,14 @@
-swagger: "2.0"
+swagger: '2.0'
 info:
   version: 1.0.0
   title: Xpharmacy
   description: our frist project
 basePath: /
-
-
-
 consumes:
   - application/json
 produces:
   - application/json
-
-
 definitions:
- 
   LoginBody:
     type: object
     title: login
@@ -31,9 +25,6 @@ definitions:
   UserBody:
     type: object
     title: user
-    # required:
-    #   - username
-    #   - password
     properties:
       username:
         type: string
@@ -46,43 +37,35 @@ definitions:
         example: 0123456789
       order:
         type: object
-        example: 
+        example: null
   Prescription:
     type: object
     title: Prescription
-    # required:
-    #   - username
-    #   - password
     properties:
       image:
         type: string
       phone:
         type: string
-        example: 0123456
+        example: 42798
       createAt:
         type: string
         example: 26-5-2019
       createBy:
         type: string
-  
   NewBody:
     type: object
     title: News
-    # required:
-    #   - username
-    #   - password
     properties:
       name:
         type: string
       info:
         type: string
-      link: 
+      link:
         type: string
-  
 paths:
-
   /prescription:
     post:
+      summary: Creat presciption
       tags:
         - Prescription
       parameters:
@@ -93,18 +76,19 @@ paths:
           schema:
             $ref: '#/definitions/Prescription'
       responses:
-          200:
-            description: create the new drug
+        '200':
+          description: create the new drug
     get:
+      summary: Get all presciption
       tags:
         - Prescription
       description: get all drug information
       responses:
-        200: 
+        '200':
           description: Return all drug
-    
-  /prescription/{id}:
+  '/prescription/{id}':
     get:
+      summary: Get 1 prescription
       tags:
         - Prescription
       parameters:
@@ -114,9 +98,10 @@ paths:
           description: id of drug
           type: string
       responses:
-        200:
+        '200':
           description: get drug by id
     put:
+      summary: Change phone number prescription
       tags:
         - Prescription
       parameters:
@@ -124,21 +109,34 @@ paths:
           in: path
           required: true
           description: id of drug update
-          type: integer
+          type: string
         - name: drug
-          in : body 
-          description: the drug you want to update 
+          in: body
+          description: the drug you want to update
           required: true
           schema:
             $ref: '#/definitions/Prescription'
       responses:
-        200:
+        '200':
           description: The drug has been successfully updated.
           schema:
             $ref: '#/definitions/Prescription'
+    delete:
+      summary: Delete prescription
+      tags:
+        - Prescription
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of prescription
+          type: string
+      responses:
+        '200':
+          description: delete success prescription
   /api/v1/user:
     post:
-      summary: "Creat a user"
+      summary: Creat a user
       tags:
         - User
       parameters:
@@ -147,20 +145,19 @@ paths:
           description: register
           required: true
           schema:
-            $ref: "#/definitions/UserBody"
+            $ref: '#/definitions/UserBody'
       responses:
-          200:
-            description: Success resgister user
+        '200':
+          description: Success resgister user
     get:
       summary: Get all user and paging
       tags:
         - User
       description: get all user information
       responses:
-        200: 
+        '200':
           description: Return all users
-    
-  /api/v1/user/{id}:
+  '/api/v1/user/{id}':
     get:
       summary: Get 1 user
       tags:
@@ -172,7 +169,7 @@ paths:
           description: id of user
           type: string
       responses:
-        200:
+        '200':
           description: get user by id
     put:
       summary: Change user password
@@ -185,83 +182,45 @@ paths:
           description: id of user update
           type: string
         - name: user
-          in : body 
-          description: the user you want to update 
+          in: body
+          description: the user you want to update
           required: true
           schema:
             $ref: '#/definitions/UserBody'
       responses:
-        200:
+        '200':
           description: The user has been successfully updated.
-  /api/v1/user/auth/login: 
-    post: 
+    delete:
+      summary: Delete user
+      tags:
+        - User
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: id of user update
+          type: string
+      responses:
+        '200':
+          description: Delete user success
+  /api/v1/user/auth/login:
+    post:
       tags:
         - User
       parameters:
         - name: login
           in: body
-          description: login 
+          description: login
           required: true
-          schema: 
-            $ref: "#/definitions/LoginBody"
+          schema:
+            $ref: '#/definitions/LoginBody'
       responses:
-        200:
+        '200':
           description: Returns all examples
-  /api/v1/user/auth/logout: 
-    get: 
+  /api/v1/user/auth/logout:
+    get:
       tags:
         - User
       responses:
         default:
-          description: "Successful log out"
-          
-  /news:
-    post:
-      tags:
-        - News
-      parameters:
-        - name: news
-          in: body
-          description: register
-          required: true
-          schema:
-            $ref: "#/definitions/NewBody"
-      responses:
-          200:
-            description: Success post
-    
-    
-  /news/{id}:
-    get:
-      tags:
-        - News
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: id of the new 
-          type: integer
-      responses:
-        200:
-          description: get the new by id
-    put:
-      tags:
-        - News
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: id of the new update
-          type: integer
-        - name: news
-          in : body 
-          description: the new you want to update 
-          required: true
-          schema:
-            $ref: '#/definitions/NewBody'
-      responses:
-        200:
-          description: The new has been successfully updated.
-          schema:
-            $ref: '#/definitions/NewBody'  
-  
+          description: Successful log out
