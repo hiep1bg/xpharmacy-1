@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { register, getAllUsers, getOneUser } = require("./controller");
+const { register, getAllUsers, getOneUser, changeUserPassword } = require("./controller");
 
 router.post("/", (req, res) => {
     register(req.body)
@@ -21,6 +21,11 @@ router.get("/:id", (req, res) => {
     .then(user => res.status(200).json(user))
     .catch(err => res.status(500).send(err));
 });
+router.put("/:id", (req, res) => {
+    changeUserPassword(req.params.id)
+    .then(user => res.status(200).send(user._id))
+    .catch(err => res.status(501).send(err));
+})
 
 
 module.exports = router;

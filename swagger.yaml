@@ -52,17 +52,74 @@ definitions:
         example: 26-5-2019
       createBy:
         type: string
-  NewBody:
+  Product_Post_Body:
     type: object
-    title: News
+    title: Product
     properties:
-      name:
+      image:
         type: string
-      info:
+      title:
         type: string
-      link:
+      description:
         type: string
+      price:
+        type: number
 paths:
+  /product:
+    post:
+      summary: create new product
+      tags:
+        - Product
+      parameters:
+        - name: product
+          in: body
+          description: post new product
+          required: true
+          schema:
+            $ref: '#/definitions/Product_Post_Body'
+      responses:
+        200:
+          description: Post product success
+    get:
+      summary: get all product
+      tags: 
+        - Product
+      description: get all product infomation
+      responses:
+        200:
+          description: OK
+  /product/{id}:
+    get:
+      summary: get product detail by id
+      tags: 
+        - Product
+      description: get product by id
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+    delete:
+      summary: delete product
+      tags: 
+        - Product
+      description: delete product
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+    
+    
+        
+        
+
   /prescription:
     post:
       summary: Creat presciption
@@ -76,7 +133,7 @@ paths:
           schema:
             $ref: '#/definitions/Prescription'
       responses:
-        '200':
+        200:
           description: create the new drug
     get:
       summary: Get all presciption
@@ -84,9 +141,9 @@ paths:
         - Prescription
       description: get all drug information
       responses:
-        '200':
+        200:
           description: Return all drug
-  '/prescription/{id}':
+  /prescription/{id}:
     get:
       summary: Get 1 prescription
       tags:
@@ -98,7 +155,7 @@ paths:
           description: id of drug
           type: string
       responses:
-        '200':
+        200:
           description: get drug by id
     put:
       summary: Change phone number prescription
@@ -117,7 +174,7 @@ paths:
           schema:
             $ref: '#/definitions/Prescription'
       responses:
-        '200':
+        200:
           description: The drug has been successfully updated.
           schema:
             $ref: '#/definitions/Prescription'
@@ -132,7 +189,7 @@ paths:
           description: id of prescription
           type: string
       responses:
-        '200':
+        200:
           description: delete success prescription
   /api/v1/user:
     post:
@@ -147,7 +204,7 @@ paths:
           schema:
             $ref: '#/definitions/UserBody'
       responses:
-        '200':
+        200:
           description: Success resgister user
     get:
       summary: Get all user and paging
@@ -155,7 +212,7 @@ paths:
         - User
       description: get all user information
       responses:
-        '200':
+        200:
           description: Return all users
   '/api/v1/user/{id}':
     get:
@@ -169,7 +226,7 @@ paths:
           description: id of user
           type: string
       responses:
-        '200':
+        200:
           description: get user by id
     put:
       summary: Change user password
@@ -188,7 +245,7 @@ paths:
           schema:
             $ref: '#/definitions/UserBody'
       responses:
-        '200':
+        200:
           description: The user has been successfully updated.
     delete:
       summary: Delete user
@@ -201,7 +258,7 @@ paths:
           description: id of user update
           type: string
       responses:
-        '200':
+        200:
           description: Delete user success
   /api/v1/user/auth/login:
     post:
@@ -215,7 +272,7 @@ paths:
           schema:
             $ref: '#/definitions/LoginBody'
       responses:
-        '200':
+        200:
           description: Returns all examples
   /api/v1/user/auth/logout:
     get:

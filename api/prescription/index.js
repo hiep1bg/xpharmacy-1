@@ -8,7 +8,7 @@ const { createPrescription, getAllPrecription, getOnePresciption } = require("./
 router.post("/",
     upload.single("image"),
     (req, res) => {
-        // req.body.userId = req.session.userInfo.id || ;
+        // req.body.userId = req.session.userInfo.id ;
         req.body.imgFile = req.file;
         createPrescription(req.body)
             .then(data => res.status(200).send(data._id))
